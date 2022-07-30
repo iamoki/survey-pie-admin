@@ -43,6 +43,7 @@
     ]
   },
   "devDependencies": {
+    "antd": "^4.22.2",
     "eslint-plugin-simple-import-sort": "^7.0.0"
   }
 }
