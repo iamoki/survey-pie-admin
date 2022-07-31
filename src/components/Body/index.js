@@ -1,4 +1,4 @@
-import SelectInut from '../SelectInput';
+import SelectInput from '../SelectInput';
 import TextAreaInut from '../TextAreaInput';
 import TextInut from '../TextInput';
 
@@ -9,7 +9,7 @@ function Body({ type, options }) {
   } else if (type === 'textarea') {
     Component = TextAreaInut;
   } else if (type === 'select') {
-    Component = SelectInut;
+    Component = SelectInput;
   } else {
     return null;
   }

@@ -1,6 +1,6 @@
 import { Radio, Space } from 'antd';
 
-function SelectInut({ options }) {
+function SelectInput({ options }) {
   return (
     <Space direction="vertical">
       {options.items.map((item) => (
@@ -10,4 +10,4 @@ function SelectInut({ options }) {
   );
 }
 
-export default SelectInut;
+export default SelectInput;

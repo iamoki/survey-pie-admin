@@ -146,13 +146,6 @@ function OptionSection() {
                 ))}
               </Fragment>
             ))}
-            {/* <SubTitle>공통 옵션</SubTitle>
-            <Item label="질문" name="title" rules={[{ required: true }]}>
-              <Input />
-            </Item>
-            <Item label="설명" name="desc" rules={[{ required: true }]}>
-              <Input />
-            </Item> */}
             <Form.Item>
               <Button
                 type="primary"
@@ -167,6 +160,13 @@ function OptionSection() {
                     options,
                     type: question.type,
                   };
+
+                  if (
+                    values.type === 'select' &&
+                    typeof values.options.items === 'string'
+                  ) {
+                    values.options.items = values.options.items.split(';');
+                  }
 
                   dispatch(
                     setQuestion({ index: selectedQuestionId, data: values }),
