@@ -10,6 +10,8 @@ function Body({ type, options }) {
     Component = TextAreaInut;
   } else if (type === 'select') {
     Component = SelectInut;
+  } else {
+    return null;
   }
 
   return <Component options={options} />;
