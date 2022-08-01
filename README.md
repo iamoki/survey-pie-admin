@@ -113,3 +113,55 @@ export default configureStore({
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
 });
 ```
+
+---
+
+## 폴더구조
+
+```
+📦src
+ ┣ 📂components - 구조별 컴포넌트
+ ┃ ┣ 📂AddButton
+ ┃ ┃ ┗ 📜index.js
+ ┃ ┣ 📂Body
+ ┃ ┃ ┗ 📜index.js
+ ┃ ┣ 📂BuilderTitleInput
+ ┃ ┃ ┗ 📜index.js
+ ┃ ┣ 📂Card
+ ┃ ┃ ┗ 📜index.js
+ ┃ ┣ 📂FloatingButton
+ ┃ ┃ ┗ 📜index.js
+ ┃ ┣ 📂OptionSection
+ ┃ ┃ ┗ 📜index.js
+ ┃ ┣ 📂PreviewSection
+ ┃ ┃ ┗ 📜index.js
+ ┃ ┣ 📂SelectInput
+ ┃ ┃ ┗ 📜index.js
+ ┃ ┣ 📂TextAreaInput
+ ┃ ┃ ┗ 📜index.js
+ ┃ ┗ 📂TextInput
+ ┃ ┃ ┗ 📜index.js
+ ┣ 📂layouts - 메인 레이아웃
+ ┃ ┗ 📜MainLayout.js
+ ┣ 📂lib - 데이터서버 기본주소 라이브러리화
+ ┃ ┗ 📜fetcher.js
+ ┣ 📂pages - 리스트페이지와 수정페이지
+ ┃ ┣ 📜BuilderPage.js
+ ┃ ┗ 📜ListPage.js
+ ┣ 📂services - 데이터 CRUD기능
+ ┃ ┣ 📜deleteSurvey.js
+ ┃ ┣ 📜fetchSurvey.js
+ ┃ ┣ 📜postSurvey.js
+ ┃ ┗ 📜putSurvey.js
+ ┣ 📂stores - 리덕스 데이터 저장관리소
+ ┃ ┣ 📂middleware
+ ┃ ┃ ┗ 📜thunk.js
+ ┃ ┣ 📂selectedQuestionId
+ ┃ ┃ ┗ 📜selectedQuestionIdSlice.js
+ ┃ ┣ 📂survey
+ ┃ ┃ ┗ 📜surveySlice.js
+ ┃ ┗ 📜index.js
+ ┣ 📜App.js
+ ┣ 📜index.css
+ ┗ 📜index.js
+```
