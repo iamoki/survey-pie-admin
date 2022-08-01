@@ -1,70 +1,115 @@
-# Getting Started with Create React App
+# Survey-admin(설문-관리자페이지) 프로젝트
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<img src="https://user-images.githubusercontent.com/76725512/182094370-9547c841-1533-4cf0-87b4-9f723b025038.png" />
 
-## Available Scripts
+<img src="https://user-images.githubusercontent.com/76725512/182094350-b8c4c2d6-a13e-4b13-bc78-d47c97ebd25e.png" />
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 🪛 Ant Design
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+기본적인 레이아웃과 리스트, 폼요소 전체를 antDesign을 활용해 구성
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```jsx
+import { Layout, Menu } from 'antd';
 
-### `npm test`
+function MainLayout({ selectedKeys, children, padding = 45 }) {
+  const contentStyle = useMemo(() => {
+    return { padding };
+  }, [padding]);
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  return (
+    <Layout
+      style={{
+        minHeight: '100vh',
+      }}
+    >
+      ...
+    </Layout>
+  );
+}
 
-### `npm run build`
+export default MainLayout;
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🪛 react-router-dom
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+페이지 이동을 위한 라우팅 처리
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```jsx
+import { Route, Routes } from 'react-router-dom';
 
-### `npm run eject`
+import BuilderPage from './pages/BuilderPage';
+import ListPage from './pages/ListPage';
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+function App() {
+  return (
+    <div className="App">
+      <Routes>
+        <Route path="/" element={<ListPage />} />
+        <Route path="/list" element={<ListPage />} />
+        <Route path="/builder" element={<BuilderPage />} />
+        <Route path="/builder/:surveyId" element={<BuilderPage />} />
+      </Routes>
+    </div>
+  );
+}
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 🪛 useSWR(React Hooks)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+JSON서버에서 데이터 가져오기
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```jsx
+import useSWR from 'swr';
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+function ListPage() {
+  const { data, error, mutate } = useSWR(
+    '/surveys?_sort=id&_order=desc',
+    fetcher,
+  );
+  ...
+}
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+export default ListPage;
+```
 
-### Code Splitting
+## 🪛 Redux
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Prop drilling방지를 위한 전역 상태관리(redux-toolkit으로 관리)
 
-### Analyzing the Bundle Size
+```jsx
+import { createSlice } from '@reduxjs/toolkit';
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+export const surveySlice = createSlice({
+  name: 'survey',
+  initialState,
+  reducers: {
+    setTitle: (state, action) => {
+      state.data.title = action.payload;
+    },
+    ...
+  },
+});
+```
 
-### Making a Progressive Web App
+## 🪛 Redux - Middleware
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+리덕스 미들웨어로 API연동하기
 
-### Advanced Configuration
+```jsx
+import { configureStore } from '@reduxjs/toolkit';
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+import thunk from './middleware/thunk';
+import selectedQuestionIdReducer from './selectedQuestionId/selectedQuestionIdSlice';
+import surveyReducer from './survey/surveySlice';
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+export default configureStore({
+  reducer: {
+    survey: surveyReducer,
+    selectedQuestionId: selectedQuestionIdReducer,
+  },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
+});
+```
