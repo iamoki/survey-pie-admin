@@ -1,3 +1,7 @@
+## 📝 [만들어진 과정을 적어보았습니다 click :)](https://velog.io/@aoh1223/SurveyProjectadmin-%ED%81%B4%EB%A1%A0%EC%BD%94%EB%94%A9-%EC%A0%95%EB%A6%AC%ED%95%98%EA%B8%B0)
+
+---
+
 # Survey-admin(설문-관리자페이지) 프로젝트
 
 <img src="https://user-images.githubusercontent.com/76725512/182094370-9547c841-1533-4cf0-87b4-9f723b025038.png" />
